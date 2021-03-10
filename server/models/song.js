@@ -20,8 +20,8 @@ SongSchema.statics.addLyric = function(id, content) {
     .then(song => {
       const lyric = new Lyric({ content, song })
       song.lyrics.push(lyric)
-      return Promise.all([lyric.save(), song.save()])
-        .then(([lyric, song]) => song);
+      return lyric.save().then((lyric) => 
+        Promise.all([lyric, song.save()])).then(([lyric, song]) => lyric)
     });
 }
 
